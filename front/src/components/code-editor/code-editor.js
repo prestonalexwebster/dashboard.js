@@ -13,7 +13,12 @@ class CodeEditor extends Component {
 
     static propTypes = {
         code: PropTypes.string,
-        onChange: PropTypes.func.isRequired
+        onChange: PropTypes.func.isRequired,
+        showLineNumbers: PropTypes.func.boolean
+    };
+
+    static defaultProps = {
+        showLineNumbers: true
     };
 
     root = React.createRef();
@@ -21,7 +26,7 @@ class CodeEditor extends Component {
     textArea = React.createRef();
 
     computeStyle(){
-       if(!this.root.current) return defaultTextAreaStyle;
+       if(!this.root.current || !this.props.showLineNumbers) return defaultTextAreaStyle;
        const lineNumberBlock = this.root.current.querySelectorAll('code')[0];
        if(!lineNumberBlock) return defaultTextAreaStyle;
        const {width} = lineNumberBlock.getBoundingClientRect();
@@ -39,12 +44,12 @@ class CodeEditor extends Component {
     }
 
     render() {
-        const {code, onChange} = this.props;
+        const {code, onChange, ...rest} = this.props;
         return (
             <div className='code-editor' ref={this.root}>
                 <textarea className='code-editor-text-area' style={this.computeStyle()} ref={this.textArea}
                           onInput={onChange}>{code}</textarea>
-                <CodeBlock code={code}/>
+                <CodeBlock {...rest} code={code} />
             </div>
         )
     }

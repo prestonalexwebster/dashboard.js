@@ -15,7 +15,7 @@ export default class StatefulCodeEditor extends Component{
     };
 
     render(){
-        return <CodeEditor onChange={this.onChange} code={this.state.code}/>
+        return <CodeEditor {...this.props} onChange={this.onChange} code={this.state.code}/>
     }
 
 }

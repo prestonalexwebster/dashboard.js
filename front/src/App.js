@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import './App.css';
-import StatefulCodeEditor from './widgets/stateful-code-editor/stateful-code-editor'
+import UnSafeStatefulConsole from './widgets/unsafe-statefull-console/unsafe-stateful-console'
 
 
 class App extends Component {
     render() {
         return (
             <div className='App'>
-                <StatefulCodeEditor/>
+                <UnSafeStatefulConsole/>
             </div>
         );
     }

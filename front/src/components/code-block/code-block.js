@@ -3,10 +3,12 @@ import style from 'react-syntax-highlighter/dist/styles/hljs/tomorrow-night-eigh
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const CodeBlock = ({code}) => {
-    return <SyntaxHighlighter language='javascript' style={style} showLineNumbers>
-        {code}
-        </SyntaxHighlighter>;
+const CodeBlock = ({code, ...rest}) => {
+    return (
+        <SyntaxHighlighter language='javascript' style={style} showLineNumbers  {...rest}>
+            {code}
+        </SyntaxHighlighter>
+    );
 };
 
 CodeBlock.propTypes = {
