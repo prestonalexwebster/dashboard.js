@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const defaultTextAreaStyle = {
     left: '5px',
-    width: 'calc(100% - 7px)'
+    width: 'calc(100% - 11px)'
 };
 
 class CodeEditor extends Component {

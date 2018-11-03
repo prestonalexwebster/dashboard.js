@@ -43,6 +43,8 @@ export default class UnsafeStatefulConsole extends Component {
         queries: []
     };
 
+    activeCodeEditor = React.createRef();
+
     onChange = ({target}) => {
         const {value} = target;
         this.setState({currentQueryCode: value});
@@ -56,15 +58,32 @@ export default class UnsafeStatefulConsole extends Component {
             result: output.result
         };
         const nextQueries = [...this.state.queries, currentQuery];
-        this.setState({queries: nextQueries, currentQueryCode: '' });
+        this.setState({queries: nextQueries, currentQueryCode: '' }, ()=>{
+            this.focusActiveCodeEditor();
+        });
     };
+
+    focusActiveCodeEditor =() =>{
+        this.activeCodeEditor.current.textArea.current.focus();
+    };
+
+    componentDidMount(){
+        this.focusActiveCodeEditor();
+        document.addEventListener('keypress', this.focusActiveCodeEditor);
+    }
+
+    componentWillUnmount(){
+        document.removeEventListener('keypress', this.focusActiveCodeEditor);
+    }
 
     renderQuery({code, completed, result}, index) {
 
             return (
                 <Fragment key={index}>
                     <CodeBlock code={code} showLineNumbers={false}/>
+                    <div className='console-weak-separator' />
                     <CodeBlock code={result} showLineNumbers={false}/>
+                    <div className='console-separator'/>
                 </Fragment>
             );
 
@@ -72,10 +91,10 @@ export default class UnsafeStatefulConsole extends Component {
 
     renderCurrentQuery(){
         return (
-            <Fragment>
+            <Fragment key={this.state.queries.length}>
                 <RunButton onClick={this.runQuery}/>
                 <CodeEditor showLineNumbers={false} code={this.state.currentQueryCode}
-                            onChange={this.onChange} key={this.state.queries.length}/>
+                            onChange={this.onChange} ref={this.activeCodeEditor}/>
             </Fragment>
         )
     }
