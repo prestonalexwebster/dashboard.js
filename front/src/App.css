@@ -1,0 +1,27 @@
+.App {
+  font-size: 13px;
+  background: rgb(45, 45, 45);
+  height: 100vh;
+}
+
+body{
+  position: absolute;
+  top: -13px;
+  width: 100%;
+}
+
+.code-editor{
+  position: relative;
+}
+
+.code-editor-text-area{
+  font-size: 13px;
+  position: absolute;
+  background: rgba(0,0,0,0);
+  top: 3px;
+  bottom: 0px;
+  color: rgba(0,0,0,0);
+  border: none;
+  resize: none;
+  caret-color: #fff;
+}
