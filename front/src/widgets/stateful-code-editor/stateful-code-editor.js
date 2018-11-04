@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import CodeEditor from "../../components/code-editor/code-editor";
 
-
+/**
+ * State controlling component for Code Editor.
+ */
 export default class StatefulCodeEditor extends Component{
 
     state = {

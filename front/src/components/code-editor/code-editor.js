@@ -8,6 +8,9 @@ const defaultTextAreaStyle = {
     width: 'calc(100% - 11px)'
 };
 
+/**
+ * CodeEditor is fully controlled component with dynamic code content. It's editable CodeBlock wrapper.
+ */
 class CodeEditor extends Component {
 
 

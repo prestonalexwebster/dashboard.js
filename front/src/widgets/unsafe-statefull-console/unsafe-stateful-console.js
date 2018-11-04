@@ -45,6 +45,10 @@ function executeCode(code, console) {
     }
 }
 
+/**
+ * Stateful console emitator. Uses main thread eval to execute javascript. Wraps console
+ * Monkey-matches console object to output console stream to output element.
+ */
 export default class UnsafeStatefulConsole extends Component {
 
     state = {
