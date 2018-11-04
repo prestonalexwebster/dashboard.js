@@ -1,37 +1,46 @@
 import React, {Component, Fragment} from 'react';
 import CodeEditor from "../../components/code-editor/code-editor";
 import CodeBlock from "../../components/code-block/code-block";
+import Icon from '../../components/icon/icon';
 
-
-const RunButton  = ({onClick}) => (
-    <button onClick={onClick} className='run-btn'>Run</button>
+const RunButton = ({onClick}) => (
+    <Icon type="arrow-right" onClick={onClick} className='run-btn-active' width="12" height="12" fill="#4a90e2"/>
 );
+
+const RunIcon = ()=>(
+    <Icon type="arrow-right" className='run-btn' width="12" height="12" fill="#fff"/>
+);
+
+const ResultIcon = ()=>(
+    <Icon type="arrow-left" className='run-btn' width="12" height="12" fill="#fff"/>
+);
+
 
 class Console {
 
-    constructor(){
+    constructor() {
         this.result = '';
     }
 
-    append(arg){
+    append(arg) {
         this.result = this.result.concat(arg, '\n');
     }
 
-    log(...args){
+    log(...args) {
         this.append(args.join(' '));
     }
 
-    error(e){
+    error(e) {
         this.append(e.message);
     }
 
 
 }
 
-function executeCode(code, console){
-    try{
+function executeCode(code, console) {
+    try {
         eval(code);
-    }catch(e){
+    } catch (e) {
         console.error(e);
     }
 }
@@ -50,7 +59,7 @@ export default class UnsafeStatefulConsole extends Component {
         this.setState({currentQueryCode: value});
     };
 
-    runQuery = ()=>{
+    runQuery = () => {
         const output = new Console();
         executeCode(this.state.currentQueryCode, output);
         const currentQuery = {
@@ -58,48 +67,54 @@ export default class UnsafeStatefulConsole extends Component {
             result: output.result
         };
         const nextQueries = [...this.state.queries, currentQuery];
-        this.setState({queries: nextQueries, currentQueryCode: '' }, ()=>{
+        this.setState({queries: nextQueries, currentQueryCode: ''}, () => {
             this.focusActiveCodeEditor();
         });
     };
 
-    focusActiveCodeEditor =() =>{
+    focusActiveCodeEditor = () => {
         this.activeCodeEditor.current.textArea.current.focus();
     };
 
-    componentDidMount(){
+    componentDidMount() {
         this.focusActiveCodeEditor();
         document.addEventListener('keypress', this.focusActiveCodeEditor);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         document.removeEventListener('keypress', this.focusActiveCodeEditor);
     }
 
     renderQuery({code, completed, result}, index) {
 
-            return (
-                <Fragment key={index}>
+        return (
+            <Fragment key={index}>
+                <div className='query'>
+                    <RunIcon/>
                     <CodeBlock code={code} showLineNumbers={false}/>
-                    <div className='console-weak-separator' />
+                </div>
+                <div className='console-weak-separator'/>
+                <div className='query'>
+                    <ResultIcon/>
                     <CodeBlock code={result} showLineNumbers={false}/>
-                    <div className='console-separator'/>
-                </Fragment>
-            );
+                </div>
+                <div className='console-separator'/>
+            </Fragment>
+        );
 
     }
 
-    renderCurrentQuery(){
+    renderCurrentQuery() {
         return (
-            <Fragment key={this.state.queries.length}>
+            <div className='query' key={this.state.queries.length}>
                 <RunButton onClick={this.runQuery}/>
                 <CodeEditor showLineNumbers={false} code={this.state.currentQueryCode}
                             onChange={this.onChange} ref={this.activeCodeEditor}/>
-            </Fragment>
+            </div>
         )
     }
 
-    render(){
+    render() {
         return (
             <Fragment>
                 {this.state.queries.map(this.renderQuery)}

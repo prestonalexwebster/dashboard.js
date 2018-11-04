@@ -10,6 +10,11 @@
   position: relative;
 }
 
+.code-editor-wrapper{
+  width: 100%;
+  display: block;
+}
+
 .code-editor-text-area{
   font-size: 13px;
   position: absolute;
@@ -24,9 +29,19 @@
 }
 
 .run-btn{
-  color: #fff;
-  background: rgba(0,0,0,0);
-  margin-top: 20px;
+  margin-left: 5px;
+  margin-top: 21px;
+}
+
+.run-btn-active{
+  cursor: pointer;
+  margin-left: 5px;
+  margin-top: 21px;
+}
+
+.query{
+  display: flex;
+  align-items: flex-start;
 }
 
 .console-separator{

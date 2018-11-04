@@ -25,31 +25,34 @@ class CodeEditor extends Component {
 
     textArea = React.createRef();
 
-    computeStyle(){
-       if(!this.root.current || !this.props.showLineNumbers) return defaultTextAreaStyle;
-       const lineNumberBlock = this.root.current.querySelectorAll('code')[0];
-       if(!lineNumberBlock) return defaultTextAreaStyle;
-       const {width} = lineNumberBlock.getBoundingClientRect();
-       return {
-           left:`${width + 5}px` ,
-           width:  `calc(100% - ${width+9}px)`
-       }
+    computeStyle() {
+        if (!this.root.current || !this.props.showLineNumbers) return defaultTextAreaStyle;
+        const lineNumberBlock = this.root.current.querySelectorAll('code')[0];
+        if (!lineNumberBlock) return defaultTextAreaStyle;
+        const {width} = lineNumberBlock.getBoundingClientRect();
+        return {
+            left: `${width + 5}px`,
+            width: `calc(100% - ${width + 9}px)`
+        }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const style = this.computeStyle();
-        for(let name in style){
-            this.textArea.current.style.setProperty(name,style[name]);
+        for (let name in style) {
+            this.textArea.current.style.setProperty(name, style[name]);
         }
     }
 
     render() {
         const {code, onChange, ...rest} = this.props;
         return (
-            <div className='code-editor' ref={this.root}>
-                <textarea className='code-editor-text-area' style={this.computeStyle()} ref={this.textArea}
+            <div  className='code-editor-wrapper'>
+                <div className='code-editor' ref={this.root}>
+                <textarea className='code-editor-text-area' autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                          style={this.computeStyle()} ref={this.textArea}
                           onInput={onChange}>{code}</textarea>
-                <CodeBlock {...rest} code={code} />
+                    <CodeBlock {...rest} code={code}/>
+                </div>
             </div>
         )
     }
