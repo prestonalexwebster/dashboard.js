@@ -2,19 +2,57 @@ import React, {Component, Fragment} from 'react';
 import CodeEditor from "../../components/code-editor/code-editor";
 import CodeBlock from "../../components/code-block/code-block";
 import Icon from '../../components/icon/icon';
+import styled, {css} from 'styled-components';
 
-const RunButton = ({onClick}) => (
-    <Icon type="arrow-right" onClick={onClick} className='run-btn-active' width="12" height="12" fill="#4a90e2"/>
+const QueryComponent = styled.div`
+  display: flex;
+  align-items: flex-start;
+`;
+
+const QueryBorder = styled.div`
+  width: 100%;
+  display: block;
+  background: rgb(50,50,50);
+  
+  ${props => props.weak 
+   ? css`height: 1px;`
+   : css`height: 2px;`};
+  
+`;
+
+
+
+
+const RunIconActive = ({onClick, className}) => (
+    <Icon type="arrow-right" onClick={onClick} className={className} width="12" height="12"/>
 );
 
-const RunIcon = ()=>(
-    <Icon type="arrow-right" className='run-btn' width="12" height="12" fill="#fff"/>
+const RunButtonActive = styled(RunIconActive)`
+    fill: #4a90e2;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-top: 21px;
+`;
+
+const RunIcon = ({className})=>(
+    <Icon type="arrow-right" className={className} width="12" height="12"/>
 );
 
-const ResultIcon = ()=>(
-    <Icon type="arrow-left" className='run-btn' width="12" height="12" fill="#fff"/>
+const RunButton = styled(RunIcon)`
+   fill: #fff;
+   margin-left: 5px;
+   margin-top: 21px;
+`;
+
+const ResultIcon = ({className})=>(
+    <Icon type="arrow-left" className={className} width="12" height="12"/>
 );
 
+const ResultButton = styled(ResultIcon)`
+   fill: #fff;
+   margin-left: 5px;
+   margin-top: 21px;
+`;
 
 class Console {
 
@@ -93,16 +131,16 @@ export default class UnsafeStatefulConsole extends Component {
 
         return (
             <Fragment key={index}>
-                <div className='query'>
-                    <RunIcon/>
+                <QueryComponent>
+                    <RunButton/>
                     <CodeBlock code={code} showLineNumbers={false}/>
-                </div>
-                <div className='console-weak-separator'/>
-                <div className='query'>
-                    <ResultIcon/>
+                </QueryComponent>
+                <QueryBorder weak/>
+                <QueryComponent>
+                    <ResultButton/>
                     <CodeBlock code={result} showLineNumbers={false}/>
-                </div>
-                <div className='console-separator'/>
+                </QueryComponent>
+                <QueryBorder/>
             </Fragment>
         );
 
@@ -110,11 +148,11 @@ export default class UnsafeStatefulConsole extends Component {
 
     renderCurrentQuery() {
         return (
-            <div className='query' key={this.state.queries.length}>
-                <RunButton onClick={this.runQuery}/>
+            <QueryComponent key={this.state.queries.length}>
+                <RunButtonActive onClick={this.runQuery}/>
                 <CodeEditor showLineNumbers={false} code={this.state.currentQueryCode}
                             onChange={this.onChange} ref={this.activeCodeEditor}/>
-            </div>
+            </QueryComponent>
         )
     }
 
