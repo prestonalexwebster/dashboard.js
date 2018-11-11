@@ -41,7 +41,7 @@ class CodeEditor extends Component {
     static propTypes = {
         code: PropTypes.string,
         onChange: PropTypes.func.isRequired,
-        showLineNumbers: PropTypes.func.boolean
+        showLineNumbers: PropTypes.bool
     };
 
     static defaultProps = {
@@ -68,9 +68,9 @@ class CodeEditor extends Component {
         return (
             <CodeEditorWrapper>{/*todo: sync height with code-editor-text-area*/}
                 <CodeEditorComponent ref={this.root}>
-                <CodeEditorTextArea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                          offset={this.getOffset()} ref={this.textArea}
-                          onInput={onChange}>{code}</CodeEditorTextArea>
+                <CodeEditorTextArea autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
+                          offset={this.getOffset()} ref={this.textArea} value={code}
+                          onChange={onChange}/>
                     <CodeBlock {...rest} code={code}/>
                 </CodeEditorComponent>
             </CodeEditorWrapper>

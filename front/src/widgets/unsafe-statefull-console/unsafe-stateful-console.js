@@ -1,3 +1,4 @@
+/* eslint no-eval: 0 */
 import React, {Component, Fragment} from 'react';
 import CodeEditor from "../../components/code-editor/code-editor";
 import CodeBlock from "../../components/code-block/code-block";
@@ -74,6 +75,7 @@ class Console {
 
 
 }
+
 
 function executeCode(code, console) {
     try {
